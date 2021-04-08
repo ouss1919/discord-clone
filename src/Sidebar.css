@@ -1,0 +1,114 @@
+.sidebar {
+  flex: 0.25;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #2f3135;
+}
+
+.sidebar__top {
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid #26282c;
+  padding: 20px;
+}
+
+.sidebar__top > h2 {
+  color: white;
+}
+
+.sidebar__top > .MuiSvgIcon-root {
+  color: white;
+}
+
+.sidebar__channels {
+  flex: 1;
+}
+
+.sidebar__channelsAdd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+.sidebar__channelsAdd > .MuiSvgIcon-root {
+  color: gray;
+  cursor: pointer;
+}
+.sidebar__channelsAdd > .MuiSvgIcon-root:hover {
+  color: white;
+}
+.sidebar__channelsAdd__header {
+  display: flex;
+  align-items: center;
+}
+.sidebar__channelsAdd__header > h3 {
+  margin-left: 10px;
+  color: gray;
+}
+.sidebar__channelsAdd__header > .MuiSvgIcon-root {
+  color: gray;
+}
+.sidebar__chanelList {
+  flex: 1;
+}
+.sidebar__footerVoice {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  justify-content: space-between;
+  border-bottom: 1px solid gray;
+  border-top: 1px solid gray;
+}
+.sidebar__voiceIcon {
+  color: #4fb185;
+}
+.sidebar__footerVoice__desc > h2 {
+  color: #4fb185;
+  font-size: 20px;
+  font-weight: 700;
+}
+.sidebar__footerVoice__desc > p {
+  color: gray;
+  font-size: 14px;
+}
+.sidebar__footerVoice__icons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.sidebar__footerVoice__icons > .MuiSvgIcon-root {
+  color: gray;
+  padding: 10px;
+  cursor: pointer;
+}
+.sidebar__footerVoice__icons > .MuiSvgIcon-root:hover {
+  color: white;
+}
+.sidebar__footerAccount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  height: 13vh;
+}
+.sidebar__footerAccount > h3 {
+  color: white;
+}
+.sidebar__footerAccount__icons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.sidebar__footerAccount__icons > .MuiSvgIcon-root {
+  color: gray;
+  padding: 5px;
+  cursor: pointer;
+}
+.sidebar__footerAccount__icons > .MuiSvgIcon-root:hover {
+  color: white;
+}
