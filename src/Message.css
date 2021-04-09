@@ -1,0 +1,27 @@
+.message {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+}
+
+.message_img {
+  width: 13vh;
+  margin-right: 20px;
+}
+
+.message__info {
+  display: flex;
+}
+.message__info > p {
+  color: gray;
+  font-size: x-small;
+}
+
+.message__info > h4 {
+  color: white;
+  margin-right: 20px;
+}
+
+.message__body > p {
+  color: white;
+}

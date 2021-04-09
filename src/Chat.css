@@ -54,3 +54,54 @@
   color: white;
   border: none;
 }
+
+.chat__footer {
+  color: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 20px;
+  border-top: 1px solid gray;
+  background-color: #474b53;
+}
+
+.chat__footer > form > input {
+  padding: 15px;
+  background: transparent;
+  border: none;
+  width: 100%;
+  outline-width: 0;
+  color: white;
+  font-size: large;
+}
+
+.chatfooter__button {
+  display: none;
+}
+.chat__footer > form {
+  flex: 1;
+}
+
+.chat__footerIcons > .MuiSvgIcon-root {
+  padding: 5px;
+}
+
+.chat__body {
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.chat__body::-webkit-scrollbar {
+  width: 12px; /* width of the entire scrollbar */
+}
+
+.chat__body::-webkit-scrollbar-track {
+  background: #474b53; /* color of the tracking area */
+}
+
+.chat__body::-webkit-scrollbar-thumb {
+  background-color: #363a3f; /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+}
