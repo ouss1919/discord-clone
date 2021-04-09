@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Chat.css'
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import EditLocationIcon from '@material-ui/icons/EditLocation';
@@ -11,12 +11,44 @@ import CardGiftcardIcon from '@material-ui/icons/CardGiftcard';
 import GifIcon from '@material-ui/icons/Gif';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import Message from './Message';
+import { selectChannel } from './features/appSlice';
+import { useSelector } from 'react-redux';
+import { selectUser } from './features/userSlice';
+import db from './firebase';
 function Chat() {
+    const channel = useSelector(selectChannel);
+    const user = useSelector(selectUser);
+    const [messages, setMessages] = useState([])
+    const [messageInput, setMessageInput] = useState('');
+
+    const SendMessage = (e) =>{
+        e.preventDefault();
+        const newMessage = {
+            name : user.displayName,
+            photo : user.photo,
+            message : messageInput,
+            timestamp : new Date().toUTCString()
+        }
+        setMessages([...messages, newMessage]);
+        db.collection('channels').doc(channel.channelId).collection('messages').add(newMessage);
+        setMessageInput('')
+    }
+    useEffect(() => {
+        channel &&
+        db.collection('channels').doc(channel.channelId).collection('messages').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+            setMessages(snapshot.docs.map(doc => ({
+                name : doc.data().name,
+                photo : doc.data().photo,
+                message : doc.data().message,
+                timestamp : doc.data().timestamp
+           })))
+       })
+    }, [channel])
     return (
         <div className="chat">
             <div className="chat__header">
                 <div className="chat__headerChatname">
-                    <h3><span className="sidebarChannel__hash">#</span>Youtube</h3>
+                    <h3><span className="sidebarChannel__hash">#</span>{channel && channel.channelName}</h3>
                 </div>
                 <div className="chat__headerSearch">
                     <NotificationsIcon />
@@ -32,44 +64,18 @@ function Chat() {
             </div>
 
             <div className="chat__body">
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
-                <Message />
+            {messages.map((message) =>(
+                    <Message name={message.name} photo={message.photo}
+                     message={message.message} timestamp={message.timestamp}/>
+                ))}
             </div>
 
             <div className="chat__footer">
                 <AddCircleIcon fontSize="large"/>
                 <form>
-                    <input type="text"
+                    <input value={messageInput} onChange ={(e) => setMessageInput(e.target.value)} type="text"
                     placeholder={`Message #TESTCHANEL`}/>
-                    <button className="chatfooter__button" type="submit">Send a Message</button>
+                    <button onClick={SendMessage} className="chatfooter__button" type="submit">Send a Message</button>
                 </form>
                 <div className="chat__footerIcons">
                     <CardGiftcardIcon fontSize="large" />

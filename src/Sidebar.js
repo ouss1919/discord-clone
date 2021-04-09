@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Sidebar.css'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
@@ -10,9 +10,33 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import HeadsetIcon from '@material-ui/icons/Headset';
 import Avatar from '@material-ui/core/Avatar';
 import SidebarChannel from './SidebarChannel';
+import { useSelector } from 'react-redux';
+import { selectUser } from './features/userSlice';
+import db, { auth} from './firebase';
+
 
 
 function Sidebar() {
+    const user = useSelector(selectUser);
+    const [channels, setChannels] = useState([]);
+
+    const handleAddChanel = () =>{
+        const channelName = prompt("Enter a new channel name");
+        if (channelName) {
+            db.collection('channels').add({
+                channelName : channelName,
+            })
+
+        }
+    }
+    useEffect(() => {
+        db.collection('channels').onSnapshot(snapshot => {
+           setChannels(snapshot.docs.map(doc => ({
+            id : doc.id,
+            channel : doc.data()
+           })))
+       })
+    }, [])
     return (
         <div className="sidebar">
             <div className="sidebar__top">
@@ -25,12 +49,12 @@ function Sidebar() {
                         <ExpandMoreIcon />
                         <h3>text Channels</h3>
                     </div>
-                    <AddIcon />
+                    <AddIcon onClick={handleAddChanel}/>
                 </div>
                 <div className="sidebar__chanelList">
-                    <SidebarChannel name="Youtube"/>
-                    <SidebarChannel name="Test channel"/>
-                    <SidebarChannel name="wow it works"/>
+                    {channels.map(({id , channel}) => (
+                        <SidebarChannel id ={id} name={channel.channelName}/>
+                    ))}
                 </div>
             </div>
             <div className="sidebar__footer">
@@ -47,9 +71,9 @@ function Sidebar() {
                         </div>
                     </div>
                     <div className="sidebar__footerAccount">
-                    <Avatar>
+                    <Avatar onClick={() => auth.signOut()} src={user.photo}>
                     </Avatar>
-                    <h3>Oussama Berarma</h3>
+                    <h3>{user.displayName}</h3>
                     <div className="sidebar__footerAccount__icons">
                         <MicIcon fontSize="small" />
                         <HeadsetIcon fontSize="small" />
